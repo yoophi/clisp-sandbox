@@ -34,3 +34,25 @@
 
 ;; (nodes->dot *wizard-nodes*)
 
+(defun edges->dot (edges)
+  (mapc (lambda (node)
+	  (mapc (lambda (edge)
+		  (fresh-line)
+		  (princ (dot-name (car node)))
+		  (princ "->")
+		  (princ (dot-name (car edge)))
+		  (princ "[label=\"")
+		  (princ (dot-label (cdr edge)))
+		  (princ "\"];"))
+		(cdr node)))
+	edges))
+
+;; (edges->dot *wizard-edges*)
+
+(defun graph->dot (nodes edges)
+  (princ "digraph{")
+  (nodes->dot nodes)
+  (edges->dot edges)
+  (princ "}"))
+
+;; (graph->dot *wizard-nodes* *wizard-edges*)
